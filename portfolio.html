@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Durgesh Sharma | Portfolio</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+            animation: bodyFadeIn 1s ease-in-out;
+        }
+
+        @keyframes bodyFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #007bff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #007bff;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        nav ul li a:hover {
+            color: #007bff;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Hero */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center/cover;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-content h1 span {
+            color: #00d4ff;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: slideInRight 1s ease-out 0.5s both;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, #0056b3, #004085);
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.5);
+        }
+
+        /* About */
+        #about {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 2rem;
+        }
+
+        #about h2 {
+            color: #007bff;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        #about p {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-top: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            object-fit: cover;
+            border: 5px solid #007bff;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        /* Skills */
+        #skills {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 2rem;
+        }
+
+        #skills h2 {
+            color: #007bff;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: #007bff;
+            font-size: 1.1rem;
+        }
+
+        .skill:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        }
+
+        /* Projects */
+        #projects {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 2rem;
+        }
+
+        #projects h2 {
+            color: #007bff;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+            border-color: #007bff;
+        }
+
+        .project-card h3 {
+            margin-bottom: 1rem;
+            color: #007bff;
+            font-size: 1.5rem;
+        }
+
+        .project-card p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        /* Contact */
+        #contact {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin: 2rem;
+        }
+
+        #contact h2 {
+            color: #007bff;
+            margin-bottom: 1.5rem;
+            font-size: 2.5rem;
+        }
+
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        #contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(90deg, #333, #555);
+            color: white;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                flex-direction: column;
+                display: none;
+                padding: 1rem 0;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+                margin: 1rem !important;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Durgesh Sharma</div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul id="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero visible">
+        <div class="hero-content">
+            <h1>Hi, I'm <span>Durgesh Sharma</span></h1>
+            <p id="typing-text"></p>
+            <a href="#contact" class="btn">Get In Touch</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>Hi there! I'm a BCA (Bachelor of Computer Applications) student with a deep enthusiasm for technology and innovation. As I progress through my degree, I'm honing my skills in programming languages such as C++, Java, and Python, alongside web technologies like HTML, CSS, and JavaScript. I'm particularly drawn to building dynamic applications, managing databases, and understanding software development lifecycles that make a tangible difference in everyday life.
+
+Outside of coursework, I enjoy experimenting with new coding challenges, contributing to community projects, and keeping up with emerging trends in AI and cybersecurity. My aspiration is to combine technical expertise with creative problem-solving to develop solutions that are both efficient and accessible. In my free time, I dive into books on tech advancements, engage in online coding forums, or unwind with video games that sharpen my strategic thinking.
+
+I'm always open to networking, learning from others, and exploring internships or collaborations. If you're passionate about tech, let's connect and create something impactful!</p>
+            
+            <!-- FIXED: Use relative path for image -->
+            <img src="dp.jpg" alt="Durgesh Sharma Profile Picture" class="profile-img">
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2>Skills</h2>
+            <div class="skills-grid">
+                <div class="skill">🌐 HTML</div>
+                <div class="skill">🎨 CSS</div>
+                <div class="skill">⚡ JavaScript</div>
+                <div class="skill">☕ Java</div>
+                <div class="skill">🗄️ MySQL</div>
+                <div class="skill">🐍 Python</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2>Projects</h2>
+            <div class="projects-grid">
+                
+                <!-- Project 1 - E-Commerce -->
+                <div class="project-card">
+                    <h3>🛒 E-Commerce Website</h3>
+                    <p>A fully responsive e-commerce site with shopping cart and checkout functionality.</p>
+                    <a href="#" class="btn">View Demo</a>
+                </div>
+                
+                <!-- Project 2 - Employee Management System -->
+                <div class="project-card">
+                    <h3>👥 Employee Management System</h3>
+                    <p>A complete system to manage employee records efficiently.</p>
+                    <!-- FIXED: Use relative path -->
+                    <a href="C:\Users\durge\Downloads\Portfolio\Employee management system.html.html" class="btn" target="_blank">View Demo</a>
+                </div>
+                
+                <!-- Project 3 - Portfolio Website -->
+                <div class="project-card">
+                    <h3>💼 Portfolio Website</h3>
+                    <p>A modern portfolio website like this one with animations.</p>
+                    <!-- FIXED: Use relative path for portfolio2.html -->
+                    <a href="portfolio2.html" class="btn" target="_blank">View Demo</a>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <form id="contact-form">
+                <input type="text" id="name-input" placeholder="Your Name" required>
+                <input type="email" id="email-input" placeholder="Your Email" required>
+                <textarea id="message-input" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Durgesh Sharma | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Typing Effect
+        const text = "A Creative Web Developer";
+        let index = 0;
+        function typeWriter() {
+            if (index < text.length) {
+                document.getElementById('typing-text').innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        window.onload = typeWriter;
+
+        // Contact Form
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name-input').value;
+            const email = document.getElementById('email-input').value;
+            const message = document.getElementById('message-input').value;
+            alert(`Thank you, ${name}! Your message has been sent successfully.`);
+            this.reset();
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        // Scroll Animation for Sections
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        sections.forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+/* Global Styles */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Container and Layout */
+.container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    margin-top: 20px;
+    max-width: 1200px;
+    width: 100%;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Headings */
+h1 {
+    color: #007bff;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+/* Search Bar */
+#search {
+    border-radius: 25px;
+    border: 2px solid #ddd;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#search:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    padding: 15px;
+}
+
+/* Form Elements */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+.btn {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #0056b3, #004085);
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.btn-warning {
+    background: linear-gradient(90deg, #ffc107, #e0a800);
+    color: white;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(90deg, #e0a800, #d39e00);
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background: linear-gradient(90deg, #dc3545, #c82333);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(90deg, #c82333, #bd2130);
+    transform: scale(1.05);
+}
+
+/* Table */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 15px;
+}
+
+.table td {
+    padding: 15px;
+    vertical-align: middle;
+    border: none;
+}
+
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f3f4;
+    cursor: pointer;
+}
+
+.table .btn-sm {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .row > .col-md-3 {
+        margin-bottom: 10px;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Employee Management System</h1>
+        
+        <!-- Search Bar -->
+        <div class="mb-3">
+            <input type="text" id="search" class="form-control" placeholder="Search employees by name...">
+        </div>
+        
+        <!-- Add Employee Form -->
+        <div class="card mb-4">
+            <div class="card-header">Add New Employee</div>
+            <div class="card-body">
+                <form id="addEmployeeForm">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="text" id="name" class="form-control" placeholder="Name" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="position" class="form-control" placeholder="Position" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" id="department" class="form-control" placeholder="Department" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" id="salary" class="form-control" placeholder="Salary" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Add Employee</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Employee Table -->
+        <div class="card">
+            <div class="card-header">Employee List</div>
+            <div class="card-body">
+                <table class="table table-striped" id="employeeTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Salary</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeBody">
+                        <!-- Rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      let employees = JSON.parse(localStorage.getItem('employees')) || [];
+let nextId = employees.length ? Math.max(...employees.map(e => e.id)) + 1 : 1;
+
+function renderTable() {
+    const tbody = document.getElementById('employeeBody');
+    tbody.innerHTML = '';
+    employees.forEach(emp => {
+        const row = `<tr>
+            <td>${emp.id}</td>
+            <td>${emp.name}</td>
+            <td>${emp.position}</td>
+            <td>${emp.department}</td>
+            <td>$${emp.salary}</td>
+            <td>
+                <button class="btn btn-sm btn-warning" onclick="editEmployee(${emp.id})">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteEmployee(${emp.id})">Delete</button>
+            </td>
+        </tr>`;
+        tbody.innerHTML += row;
+    });
+    localStorage.setItem('employees', JSON.stringify(employees));
+}
+
+document.getElementById('addEmployeeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const position = document.getElementById('position').value;
+    const department = document.getElementById('department').value;
+    const salary = document.getElementById('salary').value;
+    employees.push({ id: nextId++, name, position, department, salary });
+    renderTable();
+    this.reset();
+});
+
+function editEmployee(id) {
+    const emp = employees.find(e => e.id === id);
+    if (emp) {
+        document.getElementById('name').value = emp.name;
+        document.getElementById('position').value = emp.position;
+        document.getElementById('department').value = emp.department;
+        document.getElementById('salary').value = emp.salary;
+        deleteEmployee(id); // Remove old entry, will be re-added on submit
+    }
+}
+
+function deleteEmployee(id) {
+    employees = employees.filter(e => e.id !== id);
+    renderTable();
+}
+
+document.getElementById('search').addEventListener('input', function() {
+    const query = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#employeeBody tr');
+    rows.forEach(row => {
+        const name = row.cells[1].textContent.toLowerCase();
+        row.style.display = name.includes(query) ? '' : 'none';
+    });
+});
+
+renderTable(); // Initial render
+    </script>
+</body>
+</html>
